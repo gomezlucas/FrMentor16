@@ -1,25 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import Main from './components/main/Main';
+import CountryPage from './pages/CountryPage'
+import Navbar from './components/navbar/Navbar'
+import { ThemeProvider } from 'styled-components'
+import THEMES from './constants/themes'
+import { DARK } from './themes';
+import { LIGHT } from './themes';
+import GlobalStyle from './GlobalStyle'
+
+const getTheme = (themeName) => {
+  switch (themeName) {
+    case THEMES.DARK:
+      return DARK
+    case THEMES.LIGHT:
+      return LIGHT
+    default:
+      return null
+  }
+}
 
 function App() {
+  const [themeName, setThemeName] = useState(THEMES.LIGHT)
+
+  const handleClickTheme = () => {
+    if (themeName === 'DARK') {
+      setThemeName(THEMES.LIGHT)
+    } else {
+      setThemeName(THEMES.DARK)
+
+    }
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={getTheme(themeName)}>
+      <GlobalStyle />
+      <Router>
+        <Navbar handleClickTheme={handleClickTheme} />
+        <Switch>
+          <Route exact path='/' component={Main}></Route>
+          <Route exact path='/country/:code' component={CountryPage}></Route>
+        </Switch>
+      </Router>
+    </ThemeProvider>
+
   );
 }
 
