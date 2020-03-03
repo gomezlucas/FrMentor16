@@ -1,5 +1,10 @@
 # Frontend Mentor - REST Countries API with color theme switcher
 
+I decided to use Material Design for most of the components and Component Styled for the Theme Switcher - 
+
+
+
+
 ![Design preview for the REST Countries API with color theme switcher coding challenge](./design/desktop-preview.jpg)
 
 ## Welcome! 👋
